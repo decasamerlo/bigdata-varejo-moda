@@ -1,0 +1,174 @@
+﻿Faculdade Estácio de Sá
+CAMPUS BARREIROS SÃO JOSÉ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estudo de Vendas, Custos e Margens de Lucro no Varejo de Moda
+
+Northon Vinicius Cardoso e Andre Casagranda Merlo
+Thiago Cunha
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2026
+São José / Santa Catarina
+
+
+Sumário
+1.	DIAGNÓSTICO E TEORIZAÇÃO	3
+1.1.	Identificação das partes interessadas e parceiros	3
+1.2.	Problemática e/ou problemas identificados	3
+1.3.	Justificativa	3
+1.4.	Objetivos/resultados/efeitos a serem alcançados (em relação ao problema identificado e sob a perspectiva dos públicos envolvidos)	3
+1.5.	Referencial teórico (subsídio teórico para propositura de ações da extensão)	3
+2.	PLANEJAMENTO E DESENVOLVIMENTO DO PROJETO	4
+2.1.	Plano de trabalho (usando ferramenta acordada com o docente)	4
+2.2.	Descrição da forma de envolvimento do público participante na formulação do projeto, seu desenvolvimento e avaliação, bem como as estratégias pelo grupo para mobilizá-los.	4
+2.3.	Grupo de trabalho (descrição da responsabilidade de cada membro)	4
+2.4.	Metas, critérios ou indicadores de avaliação do projeto	4
+2.5.	Recursos previstos	5
+2.6.	Detalhamento técnico do projeto	5
+3.	ENCERRAMENTO DO PROJETO	5
+3.1.	Relatório Coletivo (podendo ser oral e escrita ou apenas escrita)	5
+3.2.	Avaliação de reação da parte interessada	5
+3.3.	Relato de Experiência Individual	5
+3.1. CONTEXTUALIZAÇÃO	5
+3.2. METODOLOGIA	6
+3.3. RESULTADOS E DISCUSSÃO:	6
+3.4. REFLEXÃO APROFUNDADA	6
+3.5.  CONSIDERAÇÕES FINAIS	6
+
+
+
+
+    1. DIAGNÓSTICO E TEORIZAÇÃO 
+        1.1. Identificação das partes interessadas e parceiros 
+O projeto tem como parte interessada uma empreendedora do setor de vestuário, responsável pela gestão de uma loja de roupas de pequeno porte. O público envolvido inclui a gestora da loja e os acadêmicos responsáveis pela análise dos dados.
+O perfil dos participantes inclui:
+    • Socioeconômico: pequeno empreendedor do varejo
+    • Escolaridade: ensino médio completo
+    • Gênero: não especificado
+    • Faixa etária: entre 25 e 50 anos
+    • Participantes estimados: 1 a 3 pessoas
+A colaboração foi realizada de forma direta, com fornecimento de dados reais de vendas para análise, mediante consentimento.
+
+        1.2. Problemática e/ou problemas identificados
+Durante conversas com a parte interessada, foi identificado que, embora a loja possua registros de vendas, custos e lucros, esses dados não são analisados de forma estruturada.
+A ausência de uma análise detalhada dificulta a identificação de produtos mais lucrativos, controle eficiente de custos e definição de estratégias de venda, o que pode impactar diretamente na rentabilidade do negócio.
+
+        1.3. Justificativa 
+O projeto é academicamente relevante por aplicar conceitos de análise de dados em um contexto real de negócio, permitindo transformar dados brutos em informações úteis para a tomada de decisão.
+Além disso, o projeto está alinhado com a área de tecnologia e Big Data, utilizando ferramentas como Python para análise e visualização de dados, promovendo aprendizado prático e aplicado.
+A motivação do projeto está na necessidade de apoiar pequenas empresas na utilização de dados para melhorar seu desempenho comercial.
+
+        1.4. Objetivos/resultados/efeitos a serem alcançados (em relação ao problema identificado e sob a perspectiva dos públicos envolvidos)
+    • Analisar os dados de vendas para identificar padrões de desempenho dos produtos
+    • Comparar custos, vendas e lucros para avaliar a eficiência comercial
+    • Gerar visualizações gráficas que auxiliem na tomada de decisão
+
+        1.5. Referencial teórico (subsídio teórico para propositura de ações da extensão)
+Breve exposição e discussão dos referenciais teóricos utilizados para entender e esclarecer a situação-problema que orienta o projeto, apresentando-as e relacionando-as com o desenvolvimento do projeto. O referencial teórico escolhido deve ser assertivo para justificar as escolhas das ações formuladas, ou seja, obras e autores citados devem apresentar respostas teóricas-científicas apropriadas para os desafios enfrentados durante a execução do projeto de extensão. Aqui no mínimo 3 (três) autores deverão ser referenciados (ver referências bibliográficas da disciplina e outras a critério do professor e ou dos acadêmicos). Sugere-se mínimo de 500 caracteres e máximo de 3 (três) páginas.
+	A análise de dados é um elemento fundamental no contexto do Big Data, permitindo extrair informações relevantes a partir de grandes volumes de dados. Segundo Viktor Mayer-Schönberger, o uso de dados possibilita novas formas de tomada de decisão baseadas em evidências.
+	De acordo com Thomas H. Davenport, empresas orientadas por dados possuem maior eficiência e competitividade no mercado.
+	Além disso, a visualização de dados desempenha um papel importante na interpretação das informações, conforme destacado por Hadley Wickham, facilitando a identificação de padrões e tendências.
+	Neste projeto, foram utilizadas técnicas de análise exploratória de dados para compreender o comportamento das vendas e lucratividade dos produtos.
+
+
+    2. PLANEJAMENTO E DESENVOLVIMENTO DO PROJETO 
+
+        2.1. Plano de trabalho (usando ferramenta acordada com o docente)
+Etapa	Responsável	Prazo	Recurso usado	Acompanhamento
+Coleta dos dados	Northon	21/04/26	Contato com empresária	Registro dos dados
+Organização dos dados	André	29/04/26	Python/ChatGPT	Código
+Análise dos dados	Ambos	10/05/26	Python/Pandas	Código
+Geração de insights	Ambos	20/05/26	Python/Matplotlib	Gráficos
+Documentação final	Ambos	08/06/26	Word	Relatório
+
+        2.2. Descrição da forma de envolvimento do público participante na formulação do projeto, seu desenvolvimento e avaliação, bem como as estratégias pelo grupo para mobilizá-los.
+O projeto será desenvolvido com base nos dados fornecidos pela parte interessada, que participará do processo por meio de conversas e validação das análises realizadas.
+As interações ocorrerão por meio de troca de informações e feedback sobre os resultados obtidos, garantindo que a análise seja relevante para o contexto da loja.
+
+        2.3. Grupo de trabalho (descrição da responsabilidade de cada membro)
+Responsável: Northon Vinicius Cardoso
+    • Coleta dos dados
+Responsável: André Casagranda Merlo
+    • Análise e organização dos dados
+Ambos:
+    • Desenvolvimento dos gráficos
+    • Documentação do projeto
+
+        2.4. Metas, critérios ou indicadores de avaliação do projeto
+    • Meta 1: Identificar produtos mais lucrativos → Indicador: ranking de produtos
+    • Meta 2: Comparar custo e venda → Indicador: gráficos comparativos
+    • Meta 3: Gerar insights aplicáveis → Indicador: conclusões no relatório
+
+        2.5. Recursos previstos
+    • Materiais: computador pessoal e internet
+    • Tecnológicos: Python, Pandas e Matplotlib
+    • Humanos: participação da parte interessada
+    • Custos financeiros: não há custos previstos
+
+        2.6. Detalhamento técnico do projeto
+O projeto será desenvolvido utilizando a linguagem Python, com apoio da biblioteca Pandas para manipulação dos dados e Matplotlib para visualização gráfica.
+Os dados analisados incluem:
+    • Nome do produto
+    • Quantidade vendida
+    • Total de custo
+    • Total de venda
+    • Valor de lucro
+    • Percentual de lucro
+Serão aplicadas técnicas de análise exploratória de dados, incluindo:
+    • Comparação entre variáveis
+    • Identificação de padrões
+    • Geração de gráficos de barras e dispersão
+
+
+    3. ENCERRAMENTO DO PROJETO 
+
+        3.1. Relato Coletivo:  
+Considerações do grupo sobre o atingimento dos objetivos sociocomunitários estabelecidos para o projeto.
+
+            3.1.1. Avaliação de reação da parte interessada
+Realizar avaliação de reação com a parte interessada (ex: formulário, entrevista gravada em áudio/vídeo, depoimento em áudio/vídeo etc.), para que o efetivo atingimento dos objetivos socioncomunitários propostos fique evidente.
+
+        3.2. Relato de Experiência Individual (Pontuação específica para o relato individual)
+Nesta seção, cada aluno deve citar seu nome, e sistematizar as aprendizagens construídas sob sua perspectiva individual. O relato deve necessariamente cobrir os seguintes itens:
+
+            3.2.1. CONTEXTUALIZAÇÃO
+Explicitar a experiência/projeto vivido e contextualizar a sua participação no projeto. 
+            3.2.2. METODOLOGIA 
+Descrever como a experiência foi vivenciada: local; sujeitos/públicos envolvidos; período; detalhamento das etapas da experiência. 
+            3.2.3. RESULTADOS E DISCUSSÃO: 
+expectativa e o vivido; descrição do que foi observado na experiência; no que resultou a experiência; como você se sentiu? descobertas/aprendizagens, facilidades, dificuldades e recomendações caso necessário. 
+            3.2.4. REFLEXÃO APROFUNDADA 
+Espaço para relato sobre a experiência vivida versus teoria apresentada no relato coletivo. 
+            3.2.5. CONSIDERAÇÕES FINAIS 
+Outros aspectos que podem ser trabalhados junto à parte interessada e perspectivas de trabalhos futuros, envolvendo tanto extensão quanto pesquisa. Soluções tecnológicas alternativas que poderiam ter sido implementadas para o projeto desenvolvido.
+
+OBSERVAÇÃO: Exige-se que todo o processo de desenvolvimento do projeto de extensão seja documentado e registrado através de evidências fotográficas ou por vídeos, tendo em vista que o conjunto de evidências não apenas irá compor a comprovação da realização das atividades, para fins regulatórios, como também poderão ser usadas para exposição do projeto em mostras acadêmico-científicas e seminários de extensão a serem realizados pelas IES.
