@@ -424,7 +424,7 @@ def main():
     print("    - Identificar produtos estrela e produtos problemáticos")
     print("    - Calcular margem de lucro por categoria")
     print("    - Analisar comportamento de compra dos clientes")
-    print()
+    print("    - Tentativa de commit no github feita pelo Northon")
 
 # ============================================================
 # 9. EXECUÇÃO DO PROGRAMA
