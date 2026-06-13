@@ -22,6 +22,11 @@
 # ela trabalha com "DataFrames" (tabelas como no Excel)
 import pandas as pd
 
+# matplotlib é a biblioteca mais usada para criar gráficos em Python
+import matplotlib
+matplotlib.use("TkAgg")  # Força o uso do backend TkAgg para gráficos
+import matplotlib.pyplot as plt
+
 # os serve para verificar se os arquivos existem antes de ler
 import os
 
@@ -80,7 +85,7 @@ def ler_csv(nome, config):
         df = pd.read_csv(
             caminho,
             sep=config["separador"],
-            encoding="latin-1"
+            encoding="UTF*-8"  # Tente UTF-8 primeiro, se der erro, use 'latin-1'
         )
         print(f"  [OK] Arquivo '{config['arquivo']}' lido com sucesso!")
         return df
@@ -285,6 +290,7 @@ def main():
     print("\n>>> ETAPA 1: Leitura dos arquivos CSV")
     dataframes = {}
 
+    # Itera sobre o dicionário de arquivos, lendo cada um e armazenando
     for nome, config in ARQUIVOS.items():
         df = ler_csv(nome, config)
         if df is not None:
@@ -411,7 +417,308 @@ def main():
             "Nome cliente ",
             "Total "
         )
+    # --------------------------------------------------------
+    # ETAPA 6: Gráficos
+    # --------------------------------------------------------
+    print("\n>>> ETAPA 6: Gráficos")
 
+    def gerar_todos_graficos(dataframes):
+        """
+        Gera todos os gráficos de análise de vendas.
+        Parâmetros:
+            dataframes (dict): Dicionário com os DataFrames carregados
+        """
+    
+        # Paleta de cores padrão para os gráficos
+        COR_CUSTO    = "#E07B54"   # laranja
+        COR_VENDA    = "#4A90D9"   # azul
+        COR_LUCRO    = "#5BAD72"   # verde
+        COR_DESTAQUE = "#F5C842"   # amarelo
+        CORES_MULTI  = ["#4A90D9", "#5BAD72", "#E07B54", "#9B59B6",
+                        "#F5C842", "#1ABC9C", "#E74C3C", "#2ECC71"]
+    
+        # --------------------------------------------------------
+        # BLOCO 1 — Total-Vendas-Mes-Ano.csv
+        # --------------------------------------------------------
+        if "Vendas_Mes_Ano" in dataframes:
+            df = dataframes["Vendas_Mes_Ano"].copy()
+    
+            # Cria um rótulo "Mês/Ano" para o eixo X
+            df["Periodo"] = df["Mês"].astype(str) + "/" + df["Ano"].astype(str)
+    
+            # ── Gráfico 1.1: Linha — Tendência de vendas ao longo do tempo ──
+            fig, ax = plt.subplots(figsize=(14, 5))
+            ax.plot(df["Periodo"], df["Total venda"],
+                    marker="o", color=COR_VENDA, linewidth=2, label="Total Venda")
+            ax.set_title("Tendência de Vendas por Mês/Ano", fontsize=14, fontweight="bold")
+            ax.set_xlabel("Período (Mês/Ano)")
+            ax.set_ylabel("Total de Vendas (R$)")
+            ax.tick_params(axis="x", rotation=45)
+            ax.legend()
+            ax.grid(True, linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_1_1_tendencia_vendas.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 1.1 gerado.")
+    
+            # ── Gráfico 1.2: Barras agrupadas — Custo vs Venda vs Lucro por mês ──
+            x = range(len(df))
+            largura = 0.28
+            fig, ax = plt.subplots(figsize=(16, 6))
+            ax.bar([i - largura for i in x], df["Total custo"],  width=largura, label="Custo",  color=COR_CUSTO)
+            ax.bar([i           for i in x], df["Total venda"],  width=largura, label="Venda",  color=COR_VENDA)
+            ax.bar([i + largura for i in x], df["Valor lucro"],  width=largura, label="Lucro",  color=COR_LUCRO)
+            ax.set_xticks(list(x))
+            ax.set_xticklabels(df["Periodo"], rotation=45, ha="right")
+            ax.set_title("Custo vs Venda vs Lucro por Mês/Ano", fontsize=14, fontweight="bold")
+            ax.set_ylabel("Valor (R$)")
+            ax.legend()
+            ax.grid(axis="y", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_1_2_custo_venda_lucro_mes.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 1.2 gerado.")
+    
+            # ── Gráfico 1.3: Barras empilhadas — Proporção custo e lucro no total ──
+            fig, ax = plt.subplots(figsize=(14, 5))
+            ax.bar(df["Periodo"], df["Total custo"], label="Custo",  color=COR_CUSTO)
+            ax.bar(df["Periodo"], df["Valor lucro"], bottom=df["Total custo"],
+                label="Lucro", color=COR_LUCRO)
+            ax.set_title("Proporção Custo vs Lucro por Mês/Ano (Empilhado)", fontsize=14, fontweight="bold")
+            ax.set_xlabel("Período (Mês/Ano)")
+            ax.set_ylabel("Valor (R$)")
+            ax.tick_params(axis="x", rotation=45)
+            ax.legend()
+            ax.grid(axis="y", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_1_3_empilhado_mes.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 1.3 gerado.")
+    
+            # ── Gráfico 1.4: Linha dupla — %Lucro vs Total Venda ──
+            fig, ax1 = plt.subplots(figsize=(14, 5))
+            ax2 = ax1.twinx()  # segundo eixo Y
+    
+            ax1.plot(df["Periodo"], df["Total venda"],
+                    marker="o", color=COR_VENDA, linewidth=2, label="Total Venda")
+            ax2.plot(df["Periodo"], df["%Lucro"],
+                    marker="s", color=COR_DESTAQUE, linewidth=2, linestyle="--", label="% Lucro")
+    
+            ax1.set_xlabel("Período (Mês/Ano)")
+            ax1.set_ylabel("Total Venda (R$)", color=COR_VENDA)
+            ax2.set_ylabel("% Lucro", color=COR_DESTAQUE)
+            ax1.tick_params(axis="x", rotation=45)
+    
+            lines1, labels1 = ax1.get_legend_handles_labels()
+            lines2, labels2 = ax2.get_legend_handles_labels()
+            ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left")
+    
+            ax1.set_title("Evolução do % de Lucro vs Total de Vendas", fontsize=14, fontweight="bold")
+            ax1.grid(True, linestyle="--", alpha=0.4)
+            plt.tight_layout()
+            plt.savefig("grafico_1_4_pct_lucro_vs_venda.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 1.4 gerado.")
+    
+        # --------------------------------------------------------
+        # BLOCO 2 — Total-Vendas-Produto.csv
+        # --------------------------------------------------------
+        if "Vendas_Produto" in dataframes:
+            df = dataframes["Vendas_Produto"].copy()
+    
+            # Descobre o nome da coluna de produto automaticamente
+            col_produto = df.columns[0]
+    
+            # ── Gráfico 2.1: Barras horizontais — Ranking produtos mais lucrativos ──
+            df_ord = df.sort_values("Valor lucro", ascending=True).tail(15)
+            fig, ax = plt.subplots(figsize=(12, 7))
+            bars = ax.barh(df_ord["Nome"], df_ord["Valor lucro"], color=COR_LUCRO)
+            ax.bar_label(bars, fmt="R$ %.0f", padding=4, fontsize=8)
+            ax.set_title("Top 15 Produtos Mais Lucrativos", fontsize=14, fontweight="bold")
+            ax.set_xlabel("Valor de Lucro (R$)")
+            ax.grid(axis="x", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_2_1_ranking_lucro_produto.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 2.1 gerado.")
+    
+            # ── Gráfico 2.3: Barras agrupadas — Custo vs Venda por produto (top 10) ──
+            df_top = df.sort_values("Total venda", ascending=False).head(10)
+            x = range(len(df_top))
+            largura = 0.35
+            fig, ax = plt.subplots(figsize=(14, 6))
+            ax.bar([i - largura/2 for i in x], df_top["Total custo"], width=largura,
+                label="Custo", color=COR_CUSTO)
+            ax.bar([i + largura/2 for i in x], df_top["Total venda"], width=largura,
+                label="Venda", color=COR_VENDA)
+            ax.set_xticks(list(x))
+            ax.set_xticklabels(df_top["Nome"], rotation=30, ha="right")
+            ax.set_title("Custo vs Venda — Top 10 Produtos", fontsize=14, fontweight="bold")
+            ax.set_ylabel("Valor (R$)")
+            ax.legend()
+            ax.grid(axis="y", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_2_3_custo_venda_produto.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 2.3 gerado.")
+    
+            # ── Gráfico 2.4: Pizza — Participação de cada produto no lucro total ──
+            df_top_pizza = df.sort_values("Valor lucro", ascending=False).head(8)
+            outros = df["Valor lucro"].sum() - df_top_pizza["Valor lucro"].sum()
+            if outros > 0:
+                outros_row = {col_produto: "Outros", "Valor lucro": outros}
+                df_top_pizza = pd.concat(
+                    [df_top_pizza, pd.DataFrame([outros_row])], ignore_index=True
+                )
+            fig, ax = plt.subplots(figsize=(10, 7))
+            ax.pie(
+                df_top_pizza["Valor lucro"],
+                labels=df_top_pizza[col_produto],
+                autopct="%1.1f%%",
+                colors=CORES_MULTI[:len(df_top_pizza)],
+                startangle=140
+            )
+            ax.set_title("Participação dos Produtos no Lucro Total", fontsize=14, fontweight="bold")
+            plt.tight_layout()
+            plt.savefig("grafico_2_4_pizza_lucro_produto.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 2.4 gerado.")
+    
+        # --------------------------------------------------------
+        # BLOCO 3 — Vendas-Cliente-2024-2025.csv
+        # --------------------------------------------------------
+        if "Vendas_Cliente" in dataframes:
+            df = dataframes["Vendas_Cliente"].copy()
+    
+            # Descobre a coluna de nome do cliente (tira espaços extras)
+            df.columns = df.columns.str.strip()
+            col_cliente = [c for c in df.columns if "cliente" in c.lower() or "nome" in c.lower()][0]
+            col_total   = [c for c in df.columns if "total" in c.lower()][0]
+            col_desc    = [c for c in df.columns if "desconto" in c.lower()][0]
+    
+            # ── Gráfico 3.1: Barras horizontais — Clientes que mais gastaram ──
+            df_cli = df.groupby(col_cliente)[col_total].sum().sort_values(ascending=True).tail(15)
+            fig, ax = plt.subplots(figsize=(12, 7))
+            bars = ax.barh(df_cli.index, df_cli.values, color=COR_VENDA)
+            ax.bar_label(bars, fmt="R$ %.0f", padding=4, fontsize=8)
+            ax.set_title("Top 15 Clientes por Total Gasto", fontsize=14, fontweight="bold")
+            ax.set_xlabel("Total Gasto (R$)")
+            ax.grid(axis="x", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_3_1_ranking_clientes.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 3.1 gerado.")
+    
+            # ── Gráfico 3.2: Barras — Desconto total por cliente (top 10) ──
+            df_desc = df.groupby(col_cliente)[col_desc].sum().sort_values(ascending=False).head(10)
+            fig, ax = plt.subplots(figsize=(12, 5))
+            ax.bar(df_desc.index, df_desc.values, color=COR_DESTAQUE)
+            ax.set_title("Top 10 Clientes com Maior Desconto Acumulado", fontsize=14, fontweight="bold")
+            ax.set_xlabel("Cliente")
+            ax.set_ylabel("Total de Descontos (R$)")
+            ax.tick_params(axis="x", rotation=30)
+            ax.grid(axis="y", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_3_2_desconto_cliente.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 3.2 gerado.")
+    
+            # ── Gráfico 3.3: Histograma — Distribuição do ticket médio ──
+            fig, ax = plt.subplots(figsize=(10, 5))
+            ax.hist(df[col_total].dropna(), bins=20, color=COR_LUCRO, edgecolor="white")
+            ax.set_title("Distribuição dos Valores de Compra (Ticket)", fontsize=14, fontweight="bold")
+            ax.set_xlabel("Valor da Compra (R$)")
+            ax.set_ylabel("Frequência")
+            ax.grid(axis="y", linestyle="--", alpha=0.5)
+            plt.tight_layout()
+            plt.savefig("grafico_3_3_histograma_ticket.png", dpi=150)
+            plt.show()
+            print("  [OK] Gráfico 3.3 gerado.")
+    
+        # --------------------------------------------------------
+        # BLOCO 4 — Vendas-Produto-2024-2025.csv
+        # --------------------------------------------------------
+        if "Vendas_Produto_Detalhado" in dataframes:
+            df = dataframes["Vendas_Produto_Detalhado"].copy()
+    
+            col_produto = df.columns[0]
+    
+            # Verifica se tem coluna de ano para comparação 2024 vs 2025
+            tem_ano = "Ano" in df.columns
+    
+            if tem_ano:
+                # ── Gráfico 4.1: Barras agrupadas — 2024 vs 2025 por produto (top 10) ──
+                df_pivot = df.groupby([col_produto, "Ano"])["Total venda"].sum().unstack(fill_value=0)
+                df_pivot = df_pivot.sort_values(
+                    by=df_pivot.columns[-1], ascending=False
+                ).head(10)
+    
+                x = range(len(df_pivot))
+                largura = 0.35
+                anos = df_pivot.columns.tolist()
+                fig, ax = plt.subplots(figsize=(14, 6))
+                for i, ano in enumerate(anos):
+                    offset = (i - len(anos)/2 + 0.5) * largura
+                    ax.bar([xi + offset for xi in x], df_pivot[ano],
+                        width=largura, label=str(ano),
+                        color=CORES_MULTI[i % len(CORES_MULTI)])
+                ax.set_xticks(list(x))
+                ax.set_xticklabels(df_pivot.index, rotation=30, ha="right")
+                ax.set_title("Vendas por Produto: 2024 vs 2025 (Top 10)", fontsize=14, fontweight="bold")
+                ax.set_ylabel("Total Venda (R$)")
+                ax.legend(title="Ano")
+                ax.grid(axis="y", linestyle="--", alpha=0.5)
+                plt.tight_layout()
+                plt.savefig("grafico_4_1_produto_2024_2025.png", dpi=150)
+                plt.show()
+                print("  [OK] Gráfico 4.1 gerado.")
+    
+            # ── Gráfico 4.2: Linha — Evolução de vendas do produto mais lucrativo ──
+            if tem_ano and "Mês" in df.columns:
+                produto_top = df.groupby(col_produto)["Valor lucro"].sum().idxmax()
+                df_prod = df[df[col_produto] == produto_top].copy()
+                df_prod["Periodo"] = df_prod["Mês"].astype(str) + "/" + df_prod["Ano"].astype(str)
+                df_prod = df_prod.sort_values(["Ano", "Mês"])
+    
+                fig, ax = plt.subplots(figsize=(12, 5))
+                ax.plot(df_prod["Periodo"], df_prod["Total venda"],
+                        marker="o", color=COR_VENDA, linewidth=2)
+                ax.set_title(f"Evolução de Vendas — {produto_top}", fontsize=13, fontweight="bold")
+                ax.set_xlabel("Período")
+                ax.set_ylabel("Total Venda (R$)")
+                ax.tick_params(axis="x", rotation=45)
+                ax.grid(True, linestyle="--", alpha=0.4)
+                plt.tight_layout()
+                plt.savefig("grafico_4_2_evolucao_produto_top.png", dpi=150)
+                plt.show()
+                print("  [OK] Gráfico 4.2 gerado.")
+    
+            # ── Gráfico 4.3: Heatmap — Volume de vendas por produto x mês ──
+            if "Mês" in df.columns:
+                df_heat = df.groupby([col_produto, "Mês"])["Total venda"].sum().unstack(fill_value=0)
+                # Limita aos 12 produtos mais vendidos para não poluir
+                df_heat = df_heat.loc[
+                    df_heat.sum(axis=1).sort_values(ascending=False).head(12).index
+                ]
+    
+                fig, ax = plt.subplots(figsize=(14, 7))
+                im = ax.imshow(df_heat.values, aspect="auto", cmap="YlGn")
+    
+                ax.set_xticks(range(len(df_heat.columns)))
+                ax.set_xticklabels([f"Mês {m}" for m in df_heat.columns])
+                ax.set_yticks(range(len(df_heat.index)))
+                ax.set_yticklabels(df_heat.index, fontsize=8)
+    
+                plt.colorbar(im, ax=ax, label="Total Venda (R$)")
+                ax.set_title("Heatmap: Vendas por Produto x Mês", fontsize=14, fontweight="bold")
+                plt.tight_layout()
+                plt.savefig("grafico_4_3_heatmap_produto_mes.png", dpi=150)
+                plt.show()
+                print("  [OK] Gráfico 4.3 gerado.")
+    
+        print("\n  [CONCLUÍDO] Todos os gráficos foram gerados e salvos como .png.")
+
+    gerar_todos_graficos(dataframes)
     # --------------------------------------------------------
     # ETAPA 6: Resumo final
     # --------------------------------------------------------
@@ -424,8 +731,7 @@ def main():
     print("    - Identificar produtos estrela e produtos problemáticos")
     print("    - Calcular margem de lucro por categoria")
     print("    - Analisar comportamento de compra dos clientes")
-    print("    - Tentativa de commit no github feita pelo Northon")
-
+    print("    - Commit e branchNorthon criada")
 # ============================================================
 # 9. EXECUÇÃO DO PROGRAMA
 # ============================================================
@@ -433,3 +739,5 @@ def main():
 # quando o script é executado diretamente (não quando é importado)
 if __name__ == "__main__":
     main()
+
+    
